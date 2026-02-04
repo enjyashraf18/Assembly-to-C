@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+/* small helper to ensure monospace looks good */
+pre, textarea { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
+
+/* Fallback styles if Tailwind isn't loaded yet */
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
