@@ -49,7 +49,7 @@
 │                            ↓                                │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │         Model Fine-Tuning Layer                      │   │
-│  │  • Deepseek Model (Base) AND Qwen                    │   │
+│  │  • Deepseek Model (Base) AND Llam                    │   │
 │  │  • LoRA Fine-tuning on Assembly-C pairs              │   │
 │  │  • Validation & Optimization                         │   │
 │  └──────────────────────────────────────────────────────┘   │
@@ -305,9 +305,10 @@ python Deployment/Back/model-inference-local.py
 
 
 
-**Created as a Senior Year IoT Project | SBME 2026, Cairo University**
 
 ## Contributors
+**Created as a Senior Year IoT Project | SBME 2026, Cairo University**
+
 
 <a href="https://github.com/FatmaElsharkawy">
   <img src="https://github.com/FatmaElsharkawy.png" width="60px;" alt="Fatma"/>
