@@ -3,9 +3,11 @@
 export HF_TOKEN=hf_xxxxxxxxxxxxxxxxx
 
 #run this in the terminal
-python -m vllm.entrypoints.openai.api_server \
-  --model deepseek-ai/deepseek-coder-7b-instruct-v1.5 \
+vllm serve deepseek-ai/deepseek-coder-7b-instruct-v1.5 \
   --enable-lora \
   --lora-modules assembly2c=FatmaElsharkawy/deepseek-lora-sft-assembly2C \
-  --max-model-len 4096 \
+  --quantization bitsandbytes \
+  --load-format bitsandbytes \
+  --gpu-memory-utilization 0.6 \
+  --max-model-len 2048 \
   --port 8000

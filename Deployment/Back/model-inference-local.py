@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
 base_model_id = "deepseek-ai/deepseek-coder-7b-instruct-v1.5"
-adapter_path = "your-lora-repo-or-local-path"
+adapter_path = "FatmaElsharkawy/deepseek-lora-sft-assembly2C"
 
 tokenizer = AutoTokenizer.from_pretrained(base_model_id)
 
