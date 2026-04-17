@@ -87,7 +87,10 @@ Assembly-to-C/
 │
 ├── FineTuning/                       # Model fine-tuning pipeline
 │   ├── data_preparation.py           # Dataset to chat format conversion
-│   └── finetuning-deepseek-assembly2c.ipynb  # Fine-tuning notebook
+│   ├── data_split.py                 # Train/validation split utility
+│   ├── data_inspection.py            # Data analysis & statistics
+│   ├── fine_tuning_autotrain_Llama.ipynb  # Llama fine-tuning
+│   └── finetuning-deepseek-assembly2c.ipynb  # Deepseek fine-tuning
 │
 ├── Compilation/                      # Code validation & compilation
 │   ├── conversion.py                 # C-to-Assembly compiler wrapper
@@ -95,12 +98,27 @@ Assembly-to-C/
 │   │   └── stm32f4xx_hal_conf.h
 │   └── STM32CubeF4/                  # STM32 SDK integration
 │
-├── Deployment/                       # API & serving
+├── Deployment/                       # API & serving layer
 │   ├── Back/
 │   │   ├── api_.py                   # FastAPI application
 │   │   ├── model-inference-local.py  # Local inference script
 │   │   └── runvllm.txt               # vLLM startup guide
-│   └── front/                        # Frontend application
+│   └── front/                        # (Placeholder)
+│
+├── Front/                            # React Frontend Application
+│   ├── package.json                  # Frontend dependencies
+│   ├── vite.config.js                # Vite build configuration
+│   ├── tailwind.config.cjs           # Tailwind CSS configuration
+│   ├── postcss.config.cjs            # PostCSS configuration
+│   ├── index.html                    # HTML entry point
+│   ├── src/
+│   │   ├── main.jsx                  # React app entry
+│   │   ├── App.jsx                   # Main App component
+│   │   ├── index.css                 # Global styles
+│   │   ├── components/
+│   │   │   └── CodeReverserChat.jsx  # Code conversion chat interface
+│   │   └── deliverables/             # Project deliverables
+│   └── README.md                     # Frontend setup instructions
 │
 ├── requirements.txt                  # Python dependencies
 └── README.md                         # This file
@@ -111,11 +129,17 @@ Assembly-to-C/
 ## Tech Stack
 
 ### Core Technologies
-- **Python 3.9+** - Primary language
+- **Python 3.9+** - Backend language
 - **FastAPI** - High-performance async web framework
 - **vLLM** - High-throughput LLM serving
 - **Deepseek** - Base model for fine-tuning
 - **httpx** - Async HTTP client library
+
+### Frontend Stack
+- **React 18** - UI framework
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Lucide React** - Icon library
 
 ### ML/AI Stack
 - **PyTorch/Transformers** - Model training framework
@@ -138,6 +162,7 @@ Assembly-to-C/
 
 ### Prerequisites
 - Python 3.9+
+- Node.js 16+ & npm (for frontend)
 - ARM GCC toolchain (for code compilation validation)
 - vLLM compatible GPU or CPU
 
@@ -148,7 +173,7 @@ Assembly-to-C/
    cd Assembly-to-C
    ```
 
-2. **Create Virtual Environment**
+2. **Create Python Virtual Environment**
    ```bash
    python -m venv .venv
    # On Windows:
@@ -157,12 +182,19 @@ Assembly-to-C/
    source .venv/bin/activate
    ```
 
-3. **Install Dependencies**
+3. **Install Backend Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configure ARM Toolchain** (for compilation validation)
+4. **Install Frontend Dependencies**
+   ```bash
+   cd Front
+   npm install
+   cd ..
+   ```
+
+5. **Configure ARM Toolchain** (for compilation validation)
    ```bash
    # Update paths in Compilation/conversion.py
    # Adjust hal_base and config_path to your STM32CubeF4 location
@@ -172,30 +204,41 @@ Assembly-to-C/
 
 ## Usage
 
-### Option 1: API Server 
+### Full Stack Setup (Backend + Frontend)
 
-1. **Start vLLM Server**
-   ```bash
-   # See Deployment/Back/runvllm.txt for detailed instructions
-   python -m vllm.entrypoints.openai.api_server \
-     --model [your-finetuned-model-path] \
-     --tensor-parallel-size 1
-   ```
+#### 1. Start vLLM Server
+```bash
+# See Deployment/Back/runvllm.txt for detailed instructions
+python -m vllm.entrypoints.openai.api_server \
+  --model [your-finetuned-model-path] \
+  --tensor-parallel-size 1
+```
 
-2. **Start FastAPI Backend**
-   ```bash
-   cd Deployment/Back
-   uvicorn api_:app --reload --host 0.0.0.0 --port 8000
-   ```
+#### 2. Start FastAPI Backend
+```bash
+cd Deployment/Back
+uvicorn api_:app --reload --host 0.0.0.0 --port 8000
+```
 
-3. **Call the API**
-   ```bash
-   curl -X POST http://localhost:8000/translate \
-     -H "Content-Type: application/json" \
-     -d '{"assembly": "mov r0, #0x42\nbx lr"}'
-   ```
+#### 3. Start Frontend Development Server
+```bash
+cd Front
+npm run dev
+```
 
-### Option 2: Local Inference
+The frontend will be available at `http://localhost:5173` (default Vite port)
+
+### Backend-Only Usage
+
+#### Option 1: API Server 
+Call the API directly with curl:
+```bash
+curl -X POST http://localhost:8000/translate \
+  -H "Content-Type: application/json" \
+  -d '{"assembly": "mov r0, #0x42\nbx lr"}'
+```
+
+#### Option 2: Local Inference
 ```bash
 python Deployment/Back/model-inference-local.py
 ```
@@ -213,7 +256,8 @@ python Deployment/Back/model-inference-local.py
 ```json
 {
   "c_code": "int add_42_to_r1(int r1_value) {\n    int result = 42 + r1_value;\n    return result;\n}\n",
-  "confidence": 0.95
+  "model": "assembly2c",
+  "status": "success"
 }
 ```
 
@@ -261,4 +305,22 @@ python Deployment/Back/model-inference-local.py
 
 
 
-**Created as a Senior Year IoT Project | SBME 2026**
+**Created as a Senior Year IoT Project | SBME 2026, Cairo University**
+
+## Contributors
+
+<a href="https://github.com/FatmaElsharkawy">
+  <img src="https://github.com/FatmaElsharkawy.png" width="60px;" alt="Fatma"/>
+</a>
+<a href="https://github.com/Shahd-A-Mahmoud">
+  <img src="https://github.com/Shahd-A-Mahmoud.png" width="60px;" alt="Shahd"/>
+</a>
+<a href="https://github.com/AhmedXAlDeeb">
+  <img src="https://github.com/AhmedXAlDeeb.png" width="60px;" alt="Ahmed"/>
+</a>
+<a href="https://github.com/enjyashraf18">
+  <img src="https://github.com/enjyashraf18.png" width="60px;" alt="Enjy"/>
+</a>
+<a href="https://github.com/meram----">
+  <img src="https://github.com/meram----" width="60px;" alt="Meram"/>
+</a>
