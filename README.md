@@ -22,7 +22,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---------|-------------|
@@ -33,48 +33,48 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Assembly-to-C System                      │
+│                    Assembly-to-C System                     │
 ├─────────────────────────────────────────────────────────────┤
-│                                                               │
+│                                                             │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │           Dataset Preparation Layer                  │   │
 │  │  • STM32 Assembly Code Collection                    │   │
 │  │  • Assembly Parsing & Cleaning                       │   │
-│  │  • Conversion to Chat Format (JSONL)                │   │
+│  │  • Conversion to Chat Format (JSONL)                 │   │
 │  └──────────────────────────────────────────────────────┘   │
-│                            ↓                                  │
+│                            ↓                                │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │         Model Fine-Tuning Layer                      │   │
-│  │  • Deepseek Model (Base) AND Qwen                            │   │
-│  │  • LoRA Fine-tuning on Assembly-C pairs             │   │
+│  │  • Deepseek Model (Base) AND Qwen                    │   │
+│  │  • LoRA Fine-tuning on Assembly-C pairs              │   │
 │  │  • Validation & Optimization                         │   │
 │  └──────────────────────────────────────────────────────┘   │
-│                            ↓                                  │
+│                            ↓                                │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │      Deployment & Inference Layer                    │   │
-│  │  • vLLM Server (Model Serving)                        │   │
+│  │  • vLLM Server (Model Serving)                       │   │
 │  │  • FastAPI Backend                                   │   │
-│  │  • Async HTTP Client                                │   │
+│  │  • Async HTTP Client                                 │   │
 │  │  • Frontend Interface                                │   │
 │  └──────────────────────────────────────────────────────┘   │
-│                            ↓                                  │
+│                            ↓                                │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │      Validation & Compilation Layer                  │   │
-│  │  • ARM GCC Compiler Integration                       │   │
-│  │  • Generated Code Verification                        │   │
-│  │  • Assembly Output Comparison                         │   │
+│  │  • ARM GCC Compiler Integration                      │   │
+│  │  • Generated Code Verification                       │   │
+│  │  • Assembly Output Comparison                        │   │
 │  └──────────────────────────────────────────────────────┘   │
-│                                                               │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Assembly-to-C/
@@ -108,7 +108,7 @@ Assembly-to-C/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Core Technologies
 - **Python 3.9+** - Primary language
