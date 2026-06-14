@@ -323,5 +323,5 @@ python Deployment/Back/model-inference-local.py
   <img src="https://github.com/enjyashraf18.png" width="60px;" alt="Enjy"/>
 </a>
 <a href="https://github.com/meram-mahmoud">
-  <img src="https://github.com/meram-mahmoud" width="60px;" alt="Meram"/>
+  <img src="https://github.com/meram-mahmoud.png" width="60px;" alt="Meram"/>
 </a>
